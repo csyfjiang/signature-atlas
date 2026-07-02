@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Risk Genes — Inherited Breast Cancer Susceptibility Genes</title>
+<meta name="description" content="Consolidated evidence summary of inherited breast cancer susceptibility genes from BCAC/BRIDGES, CARRIERS, and post-2021 exome-wide sequencing studies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F7FA;--card:#FFFFFF;--ink:#141922;--ink-soft:#586372;--ink-faint:#8792A3;
+  --line:#E4E8EF;--line-soft:#EEF1F6;--chip:#EDF1F6;--chip-ink:#3C4756;
+  --t1:#C0392B;--t1-bg:#FBEAEA;--t2:#D4740F;--t2-bg:#FDF2E3;
+  --t3:#7D3C98;--t3-bg:#F3E8FA;--t4:#2471A3;--t4-bg:#E3F0FA;
+  --t5:#7F8C8D;--t5-bg:#ECEEF0;
+  --pos:#0E8A5F;--neg:#C0503A;--focus:#1a6fd4;
+  --shadow:0 1px 2px rgba(20,25,34,.04),0 8px 24px rgba(20,25,34,.05);
+  --shadow-lift:0 2px 6px rgba(20,25,34,.06),0 18px 44px rgba(20,25,34,.10);
+  --radius:14px;
+}
+[data-theme="dark"]{
+  --paper:#0E1319;--card:#161D26;--ink:#E7ECF3;--ink-soft:#9AA6B6;--ink-faint:#6C7889;
+  --line:#242D39;--line-soft:#1C242E;--chip:#212A35;--chip-ink:#C2CCDA;
+  --t1:#E74C3C;--t1-bg:#2A1214;--t2:#F0A030;--t2-bg:#2A1E0C;
+  --t3:#AF7AC5;--t3-bg:#1E1228;--t4:#5DADE2;--t4-bg:#0E1A28;
+  --t5:#AAB7B8;--t5-bg:#1A1E20;
+  --pos:#3CB985;--neg:#E0765C;--focus:#5AA0F0;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  --shadow-lift:0 2px 8px rgba(0,0,0,.4),0 22px 50px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;transition:background .35s,color .35s;zoom:1.25}
+[v-cloak]{display:none}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+a{color:var(--t4);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+.bg-grid{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.45;background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);background-size:32px 32px;mask-image:radial-gradient(ellipse 90% 55% at 50% 0%,#000 30%,transparent 78%)}
+
+/* --- header --- */
+header.hero{max-width:960px;margin:0 auto;padding:clamp(14px,2vw,24px) 24px 4px;text-align:center}
+.back-link{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-faint);display:inline-flex;align-items:center;gap:5px}
+.back-link:hover{color:var(--ink)}
+h1{font-size:clamp(22px,3.2vw,34px);line-height:1.1;margin:.2em 0 .1em;font-weight:700;letter-spacing:-.02em}
+h1 .thin{font-weight:400;color:var(--ink-soft)}
+.lede{max-width:700px;color:var(--ink-soft);font-size:clamp(13px,1.3vw,14.5px);margin:0 auto 4px;line-height:1.45}
+.theme-toggle{position:absolute;top:16px;right:20px}
+.theme-toggle button{background:var(--card);border:1px solid var(--line);color:var(--ink);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:16px;box-shadow:var(--shadow);display:grid;place-items:center;transition:transform .2s}
+.theme-toggle button:hover{transform:translateY(-1px) rotate(-15deg)}
+
+/* --- stats --- */
+.stats{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px auto 4px}
+.stat{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:9px 16px;box-shadow:var(--shadow);min-width:80px;transition:transform .16s,box-shadow .16s}
+.stat:hover{transform:translateY(-2px);box-shadow:var(--shadow-lift)}
+.stat::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--sc,var(--ink-faint));opacity:.9}
+.stat b{font-family:"IBM Plex Mono",monospace;font-size:20px;font-weight:600;display:block;line-height:1;color:var(--sc,var(--ink));letter-spacing:-.02em}
+.stat span{font-size:10px;color:var(--ink-faint);letter-spacing:.02em;display:block;margin-top:3px}
+
+/* --- controls --- */
+.controls{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:10px}
+.controls-inner{max-width:1100px;margin:0 auto;padding:10px 24px}
+.search-wrap{position:relative;margin-bottom:8px}
+.search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-faint)}
+#search{width:100%;padding:10px 14px 10px 40px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-size:14px;font-family:inherit;transition:border-color .15s,box-shadow .15s}
+#search:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 18%,transparent)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tab{background:none;border:1px solid transparent;color:var(--ink-soft);padding:7px 13px;border-radius:8px;cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:500;transition:all .15s}
+.tab:hover{color:var(--ink);background:var(--chip)}
+.tab.active{background:var(--ink);color:var(--paper)}
+.tab .n{opacity:.55;margin-left:4px;font-size:10.5px}
+.tier-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tchip{padding:5px 11px;border-radius:8px;cursor:pointer;font-size:12px;font-family:inherit;display:inline-flex;align-items:center;gap:6px;transition:all .15s;line-height:1.2;border:1px solid transparent;background:var(--chip);color:var(--chip-ink)}
+.tchip:hover{border-color:var(--ink-faint);transform:translateY(-1px)}
+.tchip.on{font-weight:600;border-color:transparent}
+.tchip .swatch{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.tchip .cnt{font-family:"IBM Plex Mono",monospace;font-size:10px;opacity:.5;font-weight:500}
+.tchip.on .cnt{opacity:.8}
+
+/* --- main content --- */
+main{max-width:1100px;margin:0 auto;padding:14px 24px 80px}
+
+/* --- tier section --- */
+.tier-section{margin-bottom:28px}
+.tier-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--tc,var(--line))}
+.tier-dot{width:12px;height:12px;border-radius:50%;flex:0 0 auto}
+.tier-title{font-family:"IBM Plex Serif",serif;font-weight:600;font-size:18px;margin:0}
+.tier-sub{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-faint);margin-left:auto}
+
+/* --- gene card --- */
+.gene-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.gene-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .22s cubic-bezier(.2,.7,.2,1),box-shadow .22s}
+.gene-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--tc,var(--ink-faint))}
+.gene-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+.gene-top{display:flex;align-items:flex-start;gap:10px}
+.gene-name{font-family:"IBM Plex Mono",monospace;font-size:18px;font-weight:700;margin:0;letter-spacing:-.01em}
+.gene-link{color:inherit;text-decoration:none;border-bottom:1.5px dashed var(--ink-faint);transition:border-color .15s}.gene-link:hover{border-color:var(--tc);color:var(--tc)}
+.gene-badges{display:flex;gap:5px;flex-wrap:wrap;margin-left:auto}
+.risk-badge{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:5px;font-weight:600;white-space:nowrap}
+.er-badge{font-family:"IBM Plex Mono",monospace;font-size:9px;padding:3px 8px;border-radius:5px;white-space:nowrap;border:1px dashed var(--line)}
+
+/* --- OR forest plot row --- */
+.or-row{margin:10px 0 6px;display:flex;align-items:center;gap:10px}
+.or-label{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em;flex:0 0 auto;width:32px}
+.forest-wrap{flex:1;position:relative;height:22px;background:var(--line-soft);border-radius:4px;overflow:visible}
+.forest-ref{position:absolute;left:var(--ref-pos,10%);top:0;bottom:0;width:1px;background:var(--ink-faint);opacity:.5}
+.forest-bar{position:absolute;top:5px;height:12px;border-radius:3px;opacity:.85;transition:left .5s,width .5s}
+.forest-point{position:absolute;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid var(--card);box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .5s}
+.or-val{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;flex:0 0 auto;min-width:44px;text-align:right}
+.or-ci{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-faint);flex:0 0 auto}
+
+/* --- gene details --- */
+.gene-meta{margin-top:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.5}
+.gene-meta .label{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-right:4px}
+.gene-source{margin-top:6px;font-size:11.5px;color:var(--ink-faint);line-height:1.4}
+.gene-notes{margin-top:6px;font-size:12px;color:var(--ink-soft);background:var(--line-soft);border-radius:7px;padding:7px 10px;line-height:1.45}
+.gene-cancers{margin-top:6px;display:flex;gap:4px;flex-wrap:wrap}
+.cancer-tag{font-family:"IBM Plex Mono",monospace;font-size:10px;padding:3px 8px;border-radius:20px;background:var(--chip);color:var(--chip-ink)}
+
+/* --- criteria & refs section --- */
+.criteria-section{margin:32px 0 24px}
+.criteria-section h2{font-family:"IBM Plex Serif",serif;font-weight:600;font-size:18px;margin:0 0 10px}
+.criteria-list{display:grid;gap:8px}
+.criteria-item{display:flex;gap:10px;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);font-size:13px;line-height:1.5}
+.criteria-dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto;margin-top:5px}
+.criteria-item strong{font-family:"IBM Plex Mono",monospace;font-size:12px}
+
+.ref-section{margin:24px 0}
+.ref-section h2{font-family:"IBM Plex Serif",serif;font-weight:600;font-size:18px;margin:0 0 10px}
+.ref-list{display:grid;gap:6px}
+.ref-item{font-size:13px;line-height:1.55;padding:8px 12px;background:var(--card);border:1px solid var(--line);border-radius:9px;color:var(--ink-soft)}
+.ref-item .tag{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-faint);display:block;margin-bottom:2px}
+
+/* --- distinction table --- */
+.dist-section{margin:28px 0}
+.dist-section h2{font-family:"IBM Plex Serif",serif;font-weight:600;font-size:18px;margin:0 0 6px}
+.dist-section p{color:var(--ink-soft);font-size:13.5px;margin:0 0 12px;line-height:1.5}
+.dtable{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);font-size:13px}
+.dtable th,.dtable td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+.dtable th{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);background:var(--line-soft)}
+.dtable tr:last-child td{border-bottom:none}
+.dtable .gene-col{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:12.5px;white-space:nowrap}
+.group-row td{background:var(--line-soft);font-weight:600;font-size:12px;font-family:"IBM Plex Mono",monospace;letter-spacing:.04em}
+
+/* --- footnotes --- */
+.footnotes{margin:20px 0;font-size:11.5px;color:var(--ink-faint);line-height:1.6}
+.footnotes p{margin:3px 0}
+
+/* --- disclaimer --- */
+.disclaimer{background:color-mix(in srgb,var(--neg) 10%,var(--card));border:1px solid color-mix(in srgb,var(--neg) 30%,var(--line));border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:13px;line-height:1.55}
+
+footer{max-width:1100px;margin:0 auto;padding:20px 24px 40px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:12px;line-height:1.6}
+
+/* --- transitions --- */
+.flist-move{transition:transform .38s cubic-bezier(.2,.7,.2,1)}
+.flist-enter-active{transition:opacity .38s ease,transform .38s cubic-bezier(.2,.7,.2,1)}
+.flist-leave-active{transition:opacity .22s ease,transform .22s ease;position:absolute}
+.flist-enter-from{opacity:0;transform:translateY(12px) scale(.98)}
+.flist-leave-to{opacity:0;transform:scale(.97)}
+
+.empty{text-align:center;padding:48px 20px;color:var(--ink-faint)}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:var(--shadow-lift);pointer-events:none;transition:opacity .25s,transform .25s;z-index:100}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:640px){.gene-grid{grid-template-columns:1fr}.or-row{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<div id="app" v-cloak>
+  <div class="theme-toggle"><button @click="toggleTheme" :aria-label="'Toggle theme'">{{ theme==='dark' ? '☀' : '☾' }}</button></div>
+
+  <header class="hero">
+    <a class="back-link" href="index.html">← Signature Atlas</a>
+    <h1>BC Risk Genes<br><span class="thin">Inherited Breast Cancer Susceptibility Genes</span></h1>
+    <p class="lede">Consolidated evidence from BCAC/BRIDGES (Dorling 2021), CARRIERS (Hu 2021), and post-2021 exome-wide sequencing studies. Genes classified into five tiers by strength of evidence and absolute risk.</p>
+    <div class="stats">
+      <div class="stat" v-for="s in stats" :key="s.l" :style="{'--sc':s.c}"><b>{{ s.n }}</b><span>{{ s.l }}</span></div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="controls-inner">
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="search" type="search" v-model="q" placeholder="Search genes… (e.g. BRCA1, ATM, CHEK2, TP53)" autocomplete="off">
+      </div>
+      <div class="tabs" role="tablist">
+        <button v-for="t in viewTabs" :key="t.id" class="tab" :class="{active:view===t.id}" @click="view=t.id">{{ t.label }}<span class="n">{{ t.n }}</span></button>
+      </div>
+      <div class="tier-chips" v-if="view==='genes'">
+        <button v-for="t in tierFilters" :key="t.v" class="tchip" :class="{on:tier===t.v}" :style="tier===t.v?{background:t.bg,color:t.c,borderColor:t.c}:{}" @click="tier=tier===t.v?'all':t.v">
+          <span class="swatch" :style="{background:t.c}"></span>{{ t.l }}<span class="cnt">{{ tierCount(t.v) }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- GENES VIEW -->
+    <section v-show="view==='genes'">
+      <template v-for="sec in filteredSections" :key="sec.tier">
+        <div class="tier-section" :style="{'--tc':sec.color}">
+          <div class="tier-header">
+            <span class="tier-dot" :style="{background:sec.color}"></span>
+            <h2 class="tier-title">{{ sec.title }}</h2>
+            <span class="tier-sub">{{ sec.genes.length }} gene{{ sec.genes.length===1?'':'s' }}</span>
+          </div>
+          <transition-group name="flist" tag="div" class="gene-grid">
+            <div v-for="g in sec.genes" :key="g.symbol" class="gene-card" :style="{'--tc':sec.color}">
+              <div class="gene-top">
+                <h3 class="gene-name"><a :href="'https://www.genecards.org/card/'+g.symbol" target="_blank" rel="noopener" class="gene-link">{{ g.symbol }}</a></h3>
+                <div class="gene-badges">
+                  <span class="risk-badge" :style="{background:sec.bg,color:sec.color}">{{ g.riskLabel }}</span>
+                  <span v-if="g.erSkew" class="er-badge">{{ g.erSkew }}</span>
+                </div>
+              </div>
+
+              <!-- forest-plot OR bar -->
+              <div v-if="g.or" class="or-row">
+                <span class="or-label">OR</span>
+                <div class="forest-wrap">
+                  <div class="forest-ref" :style="{'--ref-pos':forestRefPos+'%'}"></div>
+                  <div class="forest-bar" :style="forestBar(g)" :class="g.or>=2?'':''" ></div>
+                  <div class="forest-point" :style="forestPoint(g)"></div>
+                </div>
+                <span class="or-val" :style="{color:sec.color}">{{ g.or.toFixed(2) }}</span>
+                <span class="or-ci">({{ g.ciLo.toFixed(2) }}–{{ g.ciHi.toFixed(2) }})</span>
+              </div>
+              <div v-else class="or-row">
+                <span class="or-label">OR</span>
+                <span style="font-size:12px;color:var(--ink-faint)">{{ g.orNote || 'Not estimated' }}</span>
+              </div>
+
+              <div class="gene-meta">
+                <span class="label">Evidence</span>{{ g.evidence }}
+              </div>
+              <div class="gene-source">
+                <span class="label">Source</span>{{ g.source }}
+              </div>
+              <div v-if="g.notes" class="gene-notes">{{ g.notes }}</div>
+              <div v-if="g.cancers && g.cancers.length" class="gene-cancers">
+                <span v-for="c in g.cancers" :key="c" class="cancer-tag">{{ c }}</span>
+              </div>
+            </div>
+          </transition-group>
+        </div>
+      </template>
+      <div v-if="!filteredSections.length" class="empty">No genes match your search.</div>
+    </section>
+
+    <!-- DISTINCTION VIEW -->
+    <section v-show="view==='distinction'">
+      <div class="dist-section">
+        <h2>Germline Risk vs. Somatic / Expression Biomarkers</h2>
+        <p>The same gene symbol can denote an inherited (germline) susceptibility gene, a somatic driver mutation, or an RNA/protein expression biomarker. These belong to different ontologies and must not be pooled without annotation.</p>
+
+        <h3 style="font-family:'IBM Plex Serif',serif;font-size:15px;margin:16px 0 8px;color:var(--t1)">Group A — Germline Susceptibility Genes (inherited risk; BCAC panel)</h3>
+        <table class="dtable">
+          <thead><tr><th>Gene</th><th>Level / Role</th><th>Relationship</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr v-for="g in germlineGenes" :key="g.gene"><td class="gene-col"><a :href="'https://www.genecards.org/card/'+g.gene" target="_blank" rel="noopener" class="gene-link">{{ g.gene }}</a></td><td>{{ g.level }}</td><td>{{ g.relationship }}</td><td>{{ g.notes }}</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-family:'IBM Plex Serif',serif;font-size:15px;margin:16px 0 8px;color:var(--t4)">Group B — Somatic / Expression Biomarkers (tumour state; TransNEO)</h3>
+        <table class="dtable">
+          <thead><tr><th>Gene</th><th>Level / Role</th><th>Relationship</th><th>Axis relevance</th></tr></thead>
+          <tbody>
+            <tr v-for="g in somaticGenes" :key="g.gene"><td class="gene-col"><a :href="'https://www.genecards.org/card/'+g.gene" target="_blank" rel="noopener" class="gene-link">{{ g.gene }}</a></td><td>{{ g.level }}</td><td>{{ g.relationship }}</td><td>{{ g.axis }}</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:10px;font-size:12.5px;color:var(--ink-faint)"><strong>Key point:</strong> ESR1, PGR, ERBB2, MKI67, CD274 are NOT inherited risk genes. They are tumour-level biomarkers that map onto immune / ER / proliferation axes — valid for biological-concordance annotation but should be labelled as subtype/pathway markers, not "risk genes."</p>
+      </div>
+    </section>
+
+    <!-- CRITERIA VIEW -->
+    <section v-show="view==='criteria'">
+      <div class="criteria-section">
+        <h2>Classification Criteria</h2>
+        <div class="criteria-list">
+          <div v-for="c in criteria" :key="c.tier" class="criteria-item">
+            <span class="criteria-dot" :style="{background:c.color}"></span>
+            <div><strong>{{ c.label }}</strong><br>{{ c.text }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnotes">
+        <p><sup>1</sup> Odds ratios for protein-truncating variants (PTVs), breast cancer overall, population-based studies. Source: Dorling et al., NEJM 2021;384:428-39 (BCAC/BRIDGES; >113,000 women).</p>
+        <p><sup>2</sup> TP53 PTV is non-significant in the BCAC population-based subset (P=0.17) but P=0.015 across all studies with BFDP=0.033; absolute risk not estimated owing to wide CI and substantial childhood-cancer risk.</p>
+        <p><sup>3</sup> CDH1, PTEN and NF1 did not reach BFDP &lt; 0.05 in BCAC, but are clinically established via the CARRIERS study (Hu et al., NEJM 2021;384:440-51) and Mendelian cancer syndromes.</p>
+        <p><sup>4</sup> MAP3K1 reached exome-wide significance in Wilcox 2023; ATRIP and BARD1 reached exome-wide significance in Collister 2025 (74,127 cases / 748,181 controls); SAMHD1 (rare missense) and LZTR1 (combined PTV+missense) were upgraded from candidate based on the same 2025 meta-analysis. WES burden gene-level ORs are not directly comparable to BCAC PTV ORs. CDKN2A remains candidate-level.</p>
+      </div>
+
+      <div class="ref-section">
+        <h2>References</h2>
+        <div class="ref-list">
+          <div v-for="r in refs" :key="r.key" class="ref-item">
+            <span class="tag">{{ r.key }}</span>
+            {{ r.apa }} <a :href="r.url" target="_blank" rel="noopener">{{ r.doi }}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="disclaimer">
+      <strong style="color:var(--neg)">⚠ Disclaimer</strong><br>
+      This page was built with AI assistance. Gene-level odds ratios, confidence intervals, tier classifications and literature citations were programmatically assembled and have <b>not</b> been exhaustively verified by domain experts. Please cross-check all data against the original publications before use in research or clinical contexts. Do not cite or rely on this page as a primary source.
+      <br><span style="color:var(--ink-faint);font-size:11.5px">本页面由 AI 辅助生成，基因风险数据、OR 值、分层分类及文献引用均为程序化整理，尚未经领域专家逐一核实。请在使用前与原始文献交叉验证，切勿直接引用。</span>
+    </div>
+    <div>Data synthesised from BCAC/BRIDGES (Dorling 2021), CARRIERS (Hu 2021), Wilcox 2023 (Nat Genet), Collister 2025 (npj Breast Cancer), and Ryan 2024 (JAMA, CDH1). Somatic/expression data from TransNEO (Sammut 2022).</div>
+    <div class="mono" style="margin-top:6px">Vue 3, CDN · static single file. Part of the <a href="index.html">Signature Atlas</a> project.</div>
+  </footer>
+
+  <div id="toast">{{ toast }}</div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script>
+const {createApp,ref,reactive,computed,onMounted} = Vue;
+
+const TIERS = {
+  t1: { key:'t1', title:'Tier 1 — High-risk, established', color:'var(--t1)', bg:'var(--t1-bg)', risk:'High (>30%)' },
+  t2: { key:'t2', title:'Tier 2 — Moderate-risk, established', color:'var(--t2)', bg:'var(--t2-bg)', risk:'Moderate (17–30%)' },
+  t3: { key:'t3', title:'Tier 3 — Syndrome-related', color:'var(--t3)', bg:'var(--t3-bg)', risk:'Syndrome-linked' },
+  t4: { key:'t4', title:'Tier 4 — Newly established (exome-wide)', color:'var(--t4)', bg:'var(--t4-bg)', risk:'Modest (RR ~1.5–2)' },
+  t5: { key:'t5', title:'Tier 5 — Candidate / not yet confirmed', color:'var(--t5)', bg:'var(--t5-bg)', risk:'Uncertain' },
+};
+
+const GENES = [
+  // Tier 1 — OR values: BCAC (Dorling 2021) primary; 2024 meta-analysis (Ann Oncol) in notes for reference
+  {symbol:'BRCA1',tier:'t1',or:10.57,ciLo:8.02,ciHi:13.93,riskLabel:'High >30%',erSkew:'ER− > ER+; TNBC',evidence:'Established',source:'Dorling 2021 (BCAC); confirmed Hu 2021 (CARRIERS)',notes:'Strongest TNBC association · 2024 meta-analysis OR 8.73 (7.47–10.20) · Carrier freq ~1 in 101 cases',cancers:['Ovary']},
+  {symbol:'BRCA2',tier:'t1',or:5.85,ciLo:4.85,ciHi:7.06,riskLabel:'High >30%',erSkew:'ER− > ER+; TNBC',evidence:'Established',source:'Dorling 2021 (BCAC); confirmed Hu 2021 (CARRIERS)',notes:'2024 meta-analysis OR 5.68 (5.13–6.30) · Carrier freq ~1 in 68 cases',cancers:['Ovary','Prostate','Pancreas','Male breast']},
+  {symbol:'PALB2',tier:'t1',or:5.02,ciLo:3.73,ciHi:6.76,riskLabel:'High >30%',erSkew:'ER− > ER+',evidence:'Established',source:'Dorling 2021 (BCAC); confirmed Hu 2021 (CARRIERS)',notes:'2024 meta-analysis OR 4.30 (3.68–5.03) · Carrier freq ~1 in 187 cases',cancers:['Pancreas','Fanconi anaemia (homozygotes)']},
+  // Tier 2
+  {symbol:'CHEK2',tier:'t2',or:2.54,ciLo:2.21,ciHi:2.91,riskLabel:'Moderate',erSkew:'ER+ > ER−',evidence:'Established',source:'Dorling 2021 (BCAC); confirmed Hu 2021 (CARRIERS)',notes:'c.1100delC OR 2.66 dominant in Europeans · Biallelic OR 8.69 · 2024 meta OR 2.40 (2.21–2.62)',cancers:[]},
+  {symbol:'ATM',tier:'t2',or:2.10,ciLo:1.71,ciHi:2.57,riskLabel:'Moderate',erSkew:'ER+ > ER−',evidence:'Established',source:'Dorling 2021 (BCAC); confirmed Hu 2021 (CARRIERS)',notes:'ER+ OR 2.33; ER− OR 1.01 (no risk increase) · 2024 meta OR 2.16 (1.93–2.41)',cancers:['Ataxia-telangiectasia (homozygotes)']},
+  {symbol:'BARD1',tier:'t2',or:2.09,ciLo:1.35,ciHi:3.23,riskLabel:'Moderate',erSkew:'ER− > ER+; TNBC',evidence:'Established',source:'Dorling 2021 (BCAC); confirmed Hu 2021 (CARRIERS); PTV exome-wide sig. Collister 2025',notes:'2025 PTV exome-wide P=8.28e-07 · 2024 meta OR 2.34 (1.85–2.97)',cancers:[]},
+  {symbol:'RAD51C',tier:'t2',or:1.93,ciLo:1.20,ciHi:3.11,riskLabel:'Moderate',erSkew:'ER− > ER+',evidence:'Established',source:'Dorling 2021 (BCAC); confirmed Hu 2021 (CARRIERS)',notes:'2024 meta OR 1.53 (1.29–2.04) · ClinGen: Definitive for ovarian, evolving for breast',cancers:['Ovary']},
+  {symbol:'RAD51D',tier:'t2',or:1.80,ciLo:1.11,ciHi:2.93,riskLabel:'Moderate',erSkew:'ER− > ER+',evidence:'Established',source:'Dorling 2021 (BCAC); confirmed Hu 2021 (CARRIERS)',notes:'2024 meta OR 1.76 (1.29–2.41)',cancers:['Ovary']},
+  {symbol:'TP53',tier:'t2',or:3.06,ciLo:0.63,ciHi:14.91,riskLabel:'Not estimated²',erSkew:'Limited data',evidence:'Established',source:'Dorling 2021 (BCAC); confirmed Hu 2021 (CARRIERS)',notes:'Li-Fraumeni syndrome · Non-significant in population-based subset (P=0.17) but P=0.015 across all studies · Missense OR 2.91 (1.71–4.98) · Wide CI due to rarity',cancers:['Sarcoma','Leukaemia','Brain','Adrenocortical']},
+  // Tier 3
+  {symbol:'CDH1',tier:'t3',or:0.86,ciLo:0.37,ciHi:1.98,riskLabel:'Syndrome',erSkew:null,evidence:'Established (CARRIERS)',source:'Hu 2021 (CARRIERS); Ryan 2024 (JAMA); not significant in Dorling 2021',notes:'Hereditary diffuse gastric cancer syndrome · 2024 JAMA cohort (213 families, 883 carriers): lifetime BC risk 36.8% (25.7–62.9%) in female carriers; gastric risk revised down to ~7–10% (was 25–83%)',cancers:['Diffuse gastric','Lobular breast']},
+  {symbol:'PTEN',tier:'t3',or:2.25,ciLo:0.85,ciHi:6.00,riskLabel:'Syndrome',erSkew:null,evidence:'Established (CARRIERS)',source:'Hu 2021 (CARRIERS); not significant in Dorling 2021',notes:'Cowden / PTEN hamartoma syndrome',cancers:['Thyroid','Endometrial','Renal']},
+  {symbol:'NF1',tier:'t3',or:1.76,ciLo:0.96,ciHi:3.21,riskLabel:'Syndrome',erSkew:null,evidence:'Established (CARRIERS)',source:'Hu 2021 (CARRIERS); not significant in Dorling 2021',notes:'Neurofibromatosis type 1',cancers:['MPNST','Glioma']},
+  {symbol:'STK11',tier:'t3',or:null,ciLo:null,ciHi:null,riskLabel:'Syndrome',erSkew:null,evidence:'Established (syndrome)',source:'NCCN guidelines; Peutz-Jeghers syndrome',notes:'Peutz-Jeghers syndrome · cumulative BC risk ~32% by age 70 (estimates span 20–54%; limited by small cohorts) · NCCN-listed',orNote:'Not in BCAC/CARRIERS panel',cancers:['Colorectal','Pancreas','Ovary','Cervical (STA)']},
+  // Tier 4
+  {symbol:'MAP3K1',tier:'t4',or:null,ciLo:null,ciHi:null,riskLabel:'Modest RR ~1.5–2',erSkew:'ER+ leaning',evidence:'Newly established',source:'Wilcox 2023 (Nat Genet); re-confirmed Collister 2025',notes:'Exome-wide significance; known GWAS locus + somatic driver',orNote:'RR ~1.5–2 (gene-level)',cancers:[]},
+  {symbol:'ATRIP',tier:'t4',or:null,ciLo:null,ciHi:null,riskLabel:'Modest',erSkew:null,evidence:'Newly established',source:'Collister 2025 (npj Breast Cancer)',notes:'ATR-interacting protein; DNA damage response · reached exome-wide significance in Collister 2025 (upgraded from sub-threshold P<1e-4 in Wilcox 2023)',orNote:'Not directly comparable to BCAC PTV',cancers:[]},
+  // Tier 5
+  {symbol:'SAMHD1',tier:'t4',or:1.31,ciLo:1.04,ciHi:1.65,riskLabel:'Modest',erSkew:null,evidence:'Newly established',source:'Collister 2025 (npj Breast Cancer); missense exome-wide sig.',notes:'Exome-wide significant for rare missense variants; upgraded from candidate based on 2025 meta-analysis',orNote:null,cancers:[]},
+  {symbol:'LZTR1',tier:'t4',or:null,ciLo:null,ciHi:null,riskLabel:'Modest',erSkew:null,evidence:'Newly established',source:'Collister 2025 (npj Breast Cancer); combined PTV+missense sig.',notes:'Exome-wide significant in combined PTV + Helix missense analysis; upgraded from candidate',orNote:'Combined PTV+missense',cancers:[]},
+  {symbol:'CDKN2A',tier:'t5',or:null,ciLo:null,ciHi:null,riskLabel:'Uncertain',erSkew:null,evidence:'Candidate',source:'WES meta-analyses (missense aggregate)',notes:'Deleterious-missense aggregate signal',orNote:'Missense aggregate',cancers:['Melanoma','Pancreas']},
+];
+
+createApp({
+  setup(){
+    const theme = ref(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    const q = ref('');
+    const view = ref('genes');
+    const tier = ref('all');
+    const toast = ref('');
+
+    function toggleTheme(){theme.value=theme.value==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',theme.value)}
+    onMounted(()=>{if(theme.value==='dark')document.documentElement.setAttribute('data-theme','dark')});
+
+    const stats = [
+      {n:GENES.length,l:'Total genes',c:'var(--ink)'},
+      {n:GENES.filter(g=>g.tier==='t1').length,l:'High-risk',c:'var(--t1)'},
+      {n:GENES.filter(g=>g.tier==='t2').length,l:'Moderate-risk',c:'var(--t2)'},
+      {n:GENES.filter(g=>g.tier==='t3').length,l:'Syndrome',c:'var(--t3)'},
+      {n:GENES.filter(g=>g.tier==='t4').length,l:'Newly established',c:'var(--t4)'},
+      {n:6,l:'Key references',c:'var(--ink-faint)'},
+    ];
+
+    const tierFilters = [
+      {v:'t1',l:'Tier 1 High',c:'var(--t1)',bg:'var(--t1-bg)'},
+      {v:'t2',l:'Tier 2 Moderate',c:'var(--t2)',bg:'var(--t2-bg)'},
+      {v:'t3',l:'Tier 3 Syndrome',c:'var(--t3)',bg:'var(--t3-bg)'},
+      {v:'t4',l:'Tier 4 New',c:'var(--t4)',bg:'var(--t4-bg)'},
+      {v:'t5',l:'Tier 5 Candidate',c:'var(--t5)',bg:'var(--t5-bg)'},
+    ];
+
+    const viewTabs = computed(()=>[
+      {id:'genes',label:'Genes',n:GENES.length},
+      {id:'distinction',label:'Germline vs Somatic',n:''},
+      {id:'criteria',label:'Criteria & Refs',n:''},
+    ]);
+
+    function tierCount(t){return GENES.filter(g=>g.tier===t).length}
+
+    const maxOR = 15;
+    const forestRefPos = (1/maxOR)*100;
+
+    function forestPoint(g){
+      if(!g.or) return {display:'none'};
+      const pct = Math.min(g.or/maxOR*100, 98);
+      return {left:`calc(${pct}% - 7px)`,background:TIERS[g.tier].color};
+    }
+    function forestBar(g){
+      if(!g.or) return {display:'none'};
+      const lo = Math.max(0, g.ciLo/maxOR*100);
+      const hi = Math.min(g.ciHi/maxOR*100, 100);
+      return {left:lo+'%',width:(hi-lo)+'%',background:TIERS[g.tier].color};
+    }
+
+    const filteredSections = computed(()=>{
+      const search = q.value.trim().toLowerCase();
+      const tiers = tier.value==='all'?['t1','t2','t3','t4','t5']:[tier.value];
+      return tiers.map(t=>{
+        const genes = GENES.filter(g=>{
+          if(g.tier!==t) return false;
+          if(!search) return true;
+          return g.symbol.toLowerCase().includes(search)
+            || (g.notes||'').toLowerCase().includes(search)
+            || (g.cancers||[]).some(c=>c.toLowerCase().includes(search))
+            || (g.erSkew||'').toLowerCase().includes(search)
+            || (g.source||'').toLowerCase().includes(search);
+        });
+        return {tier:t,...TIERS[t],genes};
+      }).filter(s=>s.genes.length>0);
+    });
+
+    const germlineGenes = [
+      {gene:'BRCA1/2, PALB2',level:'Germline high-risk',relationship:'Inherited predisposition (Tier 1)',notes:'—'},
+      {gene:'ATM, CHEK2, BARD1, RAD51C/D, TP53',level:'Germline moderate-risk',relationship:'Inherited predisposition (Tier 2)',notes:'ER-axis direction echoed (ATM/CHEK2 → ER+; BARD1/RAD51 → ER−)'},
+      {gene:'CDH1, PTEN, NF1, STK11',level:'Germline / syndrome',relationship:'Syndrome-linked (NCCN); STK11 not assessed in BCAC',notes:'—'},
+      {gene:'BRIP1',level:'Germline',relationship:'On panel but NOT a BC risk gene',notes:'Ovarian-cancer gene'},
+    ];
+
+    const somaticGenes = [
+      {gene:'TP53 (somatic)',level:'Somatic driver mutation',relationship:'Mutated in 57%; OR 2.9 for pCR',axis:'Distinct from germline TP53'},
+      {gene:'PIK3CA',level:'Somatic driver',relationship:'Mutated in 26%; residual disease',axis:'—'},
+      {gene:'MAP3K1 (somatic), GATA3',level:'Somatic driver',relationship:'Recurrent drivers',axis:'MAP3K1 also germline Tier-4'},
+      {gene:'ESR1, PGR',level:'Expression biomarker',relationship:'Top ML features for pCR',axis:'ER / hormone axis'},
+      {gene:'ERBB2 (HER2)',level:'Expression / amplification',relationship:'Top ML feature; therapeutic target',axis:'HER2 axis'},
+      {gene:'MKI67 (Ki67)',level:'Expression biomarker',relationship:'Proliferation index',axis:'Proliferation axis'},
+      {gene:'CD274 (PD-L1), STAT1',level:'Expression / immune module',relationship:'Immune activation; high → pCR',axis:'Immune axis'},
+      {gene:'CDKN2A, EGFR, CCNE1, MYC, CCND1, ZNF703',level:'Differential expression',relationship:'Up/down in responders',axis:'Proliferation-linked'},
+    ];
+
+    const criteria = [
+      {tier:'t1',color:'var(--t1)',label:'Tier 1 — High-risk, established',text:'PTV association with BFDP < 0.05 in BCAC, AND estimated absolute risk to age 80 exceeding the 30% NICE high-risk threshold (BRCA1, BRCA2, PALB2).'},
+      {tier:'t2',color:'var(--t2)',label:'Tier 2 — Moderate-risk, established',text:'PTV association with BFDP < 0.05 in BCAC, with estimated absolute risk within the 17–30% NICE moderate-risk range (ATM, BARD1, CHEK2, RAD51C, RAD51D). TP53 included on BFDP and prior evidence despite unstable absolute-risk estimate.'},
+      {tier:'t3',color:'var(--t3)',label:'Tier 3 — Syndrome-related',text:'Did not reach BFDP < 0.05 in BCAC, but clinically established through a recognised Mendelian cancer syndrome and NCCN guidelines (CDH1, PTEN, NF1, STK11). CDH1, PTEN and NF1 are additionally supported by the CARRIERS study.'},
+      {tier:'t4',color:'var(--t4)',label:'Tier 4 — Newly established (exome-wide)',text:'Reached exome-wide significance in post-2021 WES meta-analyses, not covered by the original panel studies: MAP3K1 (Wilcox 2023); ATRIP, SAMHD1 (rare missense) and LZTR1 (combined PTV+missense) in Collister 2025.'},
+      {tier:'t5',color:'var(--t5)',label:'Tier 5 — Candidate',text:'Sub-threshold signal (P < 1×10⁻⁴) or single-study association without independent replication (CDKN2A). SAMHD1 and LZTR1 were promoted to Tier 4 after the Collister 2025 meta-analysis.'},
+    ];
+
+    const refs = [
+      {key:'Dorling 2021',apa:'Dorling, L., Carvalho, S., Allen, J., et al. & BCAC. (2021). Breast cancer risk genes — Association analysis in more than 113,000 women. NEJM, 384(5), 428–439.',doi:'doi:10.1056/NEJMoa1913948',url:'https://doi.org/10.1056/NEJMoa1913948'},
+      {key:'Hu 2021',apa:'Hu, C., Hart, S. N., Gnanaolivu, R., et al. (2021). A population-based study of genes previously implicated in breast cancer. NEJM, 384(5), 440–451.',doi:'doi:10.1056/NEJMoa2005936',url:'https://doi.org/10.1056/NEJMoa2005936'},
+      {key:'Wilcox 2023',apa:'Wilcox, N., Dumont, M., González-Neira, A., et al. (2023). Exome sequencing identifies breast cancer susceptibility genes. Nature Genetics, 55(9), 1435–1439.',doi:'doi:10.1038/s41588-023-01466-z',url:'https://doi.org/10.1038/s41588-023-01466-z'},
+      {key:'Collister 2025',apa:'Collister, J. A., Smith-Byrne, K., Atkins, J., et al. (2025). Meta-analysis of exome-wide gene burden analysis of breast cancer susceptibility genes. npj Breast Cancer, 11, 111.',doi:'doi:10.1038/s41523-025-00826-8',url:'https://doi.org/10.1038/s41523-025-00826-8'},
+      {key:'Ryan 2024',apa:'Ryan, C. E., Fasaye, G-A., Gallanis, A. F., et al. (2024). Germline CDH1 variants and lifetime cancer risk. JAMA, 332(9), 722–729.',doi:'doi:10.1001/jama.2024.10852',url:'https://doi.org/10.1001/jama.2024.10852'},
+      {key:'2024 Meta',apa:'Population-based meta-analysis (BRIDGES + CARRIERS + UK Biobank; ~101,397 cases, ~312,944 controls). (2024). Annals of Oncology.',doi:'doi:10.1016/j.annonc.2024.07.001',url:'https://doi.org/10.1016/S0923-7534(24)01014-7'},
+      {key:'Sammut 2022',apa:'Sammut, S.-J., Crispin-Ortuzar, M., Chin, S.-F., et al. (2022). Multi-omic ML predictor of breast cancer therapy response. Nature, 601(7894), 623–629.',doi:'doi:10.1038/s41586-021-04278-5',url:'https://doi.org/10.1038/s41586-021-04278-5'},
+    ];
+
+    return {theme,q,view,tier,toast,stats,tierFilters,viewTabs,tierCount,
+      filteredSections,forestRefPos,forestPoint,forestBar,
+      germlineGenes,somaticGenes,criteria,refs,toggleTheme};
+  }
+}).mount('#app');
+</script>
+</body>
+</html>
