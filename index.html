@@ -38,16 +38,15 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex San
 a{color:var(--dna);text-decoration:none}a:hover{text-decoration:underline}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
 .bg-grid{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);background-size:32px 32px;mask-image:radial-gradient(ellipse 90% 55% at 50% 0%,#000 30%,transparent 78%)}
-header{max-width:1220px;margin:0 auto;padding:38px 24px 8px}
-.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+header.hero{max-width:1000px;margin:0 auto;padding:clamp(24px,4vw,42px) 24px 8px;text-align:center}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap}
 .eyebrow .dot{width:6px;height:6px;border-radius:50%}
-h1{font-size:clamp(30px,4.6vw,50px);line-height:1.02;margin:.32em 0 .12em;font-weight:700;letter-spacing:-.02em}
+h1{font-size:clamp(26px,4.4vw,46px);line-height:1.04;margin:.34em 0 .16em;font-weight:700;letter-spacing:-.02em}
 h1 .thin{font-weight:400;color:var(--ink-soft)}
-.lede{max-width:680px;color:var(--ink-soft);font-size:16px;margin:0 0 6px}
-.lede-cn{font-size:13.5px;color:var(--ink-faint);margin:2px 0 0}
-.header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
-.header-viz{flex:0 0 auto;width:min(340px,100%)}
-.atlas-net{width:100%;height:118px;display:block;overflow:visible}
+.lede{max-width:660px;color:var(--ink-soft);font-size:clamp(14px,1.5vw,16px);margin:0 auto 6px}
+.lede-cn{font-size:13px;color:var(--ink-faint);margin:2px auto 0}
+.header-viz{width:min(360px,86%);margin:16px auto 0}
+.atlas-net{width:100%;height:clamp(92px,12vw,118px);display:block;overflow:visible}
 .net-edges line{opacity:0;animation:edgeIn .55s ease forwards}
 .net-nodes circle{transform-box:fill-box;transform-origin:center;opacity:0;animation:nodeIn .5s cubic-bezier(.2,.8,.2,1) forwards}
 @keyframes edgeIn{to{opacity:1}}
@@ -56,10 +55,12 @@ h1 .thin{font-weight:400;color:var(--ink-soft)}
 .theme-toggle{position:absolute;top:20px;right:24px}
 .theme-toggle button{background:var(--card);border:1px solid var(--line);color:var(--ink);width:40px;height:40px;border-radius:11px;cursor:pointer;font-size:17px;box-shadow:var(--shadow);display:grid;place-items:center;transition:transform .2s}
 .theme-toggle button:hover{transform:translateY(-1px) rotate(-15deg)}
-.stats{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 4px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:11px 16px;box-shadow:var(--shadow)}
-.stat b{font-family:"IBM Plex Mono",monospace;font-size:21px;font-weight:600;display:block;line-height:1}
-.stat span{font-size:11.5px;color:var(--ink-faint)}
+.stats{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:22px auto 6px}
+.stat{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:15px 22px;box-shadow:var(--shadow);min-width:118px;transition:transform .16s,box-shadow .16s}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+.stat::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--sc,var(--ink-faint));opacity:.9}
+.stat b{font-family:"IBM Plex Mono",monospace;font-size:27px;font-weight:600;display:block;line-height:1;color:var(--sc,var(--ink));letter-spacing:-.02em}
+.stat span{font-size:11px;color:var(--ink-faint);letter-spacing:.02em;display:block;margin-top:6px}
 .controls{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:22px}
 .controls-inner{max-width:1220px;margin:0 auto;padding:12px 24px}
 .search-wrap{position:relative;margin-bottom:11px}
@@ -202,50 +203,46 @@ footer .mono{font-size:11.5px}
 <div id="app" v-cloak>
   <div class="theme-toggle"><button @click="toggleTheme" :aria-label="'Toggle theme'">{{ theme==='dark' ? '☀' : '☾' }}</button></div>
 
-  <header>
-    <div class="header-row">
-      <div>
-        <div class="eyebrow">
-          <span class="dot" style="background:var(--immune)"></span>immune
-          <span class="dot" style="background:var(--prolif)"></span>proliferation
-          <span class="dot" style="background:var(--er)"></span>ER
-          <span class="dot" style="background:var(--her2)"></span>HER2
-          <span class="dot" style="background:var(--dna)"></span>DNA-repair
-        </div>
-        <h1>Signature Atlas<br><span class="thin">pathways, gene sets &amp; signatures by biological axis</span></h1>
-        <p class="lede">One connected map of the breast-cancer pCR landscape: Hallmark sets, PROGENy footprints, DoRothEA regulons and published clinical signatures — grouped by axis, cross-linked, weighted where weights exist, and annotated with what is established in breast cancer.</p>
-        <p class="lede-cn">按免疫 / 增殖 / ER / HER2 / DNA-repair 轴组织 · 相互超链接 · 真实基因组成与权重 · 每条带临床注释</p>
-      </div>
-      <div class="header-viz" aria-hidden="true">
-        <svg class="atlas-net" viewBox="0 0 340 126" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g class="net-edges" stroke="var(--line)" stroke-width="1.4">
-            <line x1="170" y1="63" x2="62" y2="38" style="animation-delay:.05s"/>
-            <line x1="170" y1="63" x2="140" y2="24" style="animation-delay:.1s"/>
-            <line x1="170" y1="63" x2="214" y2="40" style="animation-delay:.15s"/>
-            <line x1="170" y1="63" x2="104" y2="96" style="animation-delay:.2s"/>
-            <line x1="170" y1="63" x2="190" y2="102" style="animation-delay:.25s"/>
-            <line x1="170" y1="63" x2="258" y2="86" style="animation-delay:.3s"/>
-            <line x1="140" y1="24" x2="214" y2="40" style="animation-delay:.32s"/>
-            <line x1="214" y1="40" x2="288" y2="30" style="animation-delay:.36s"/>
-            <line x1="104" y1="96" x2="190" y2="102" style="animation-delay:.4s"/>
-            <line x1="258" y1="86" x2="288" y2="30" style="animation-delay:.44s"/>
-          </g>
-          <g class="net-nodes">
-            <circle cx="170" cy="63" r="6" fill="var(--ink-faint)" style="animation-delay:0s"/>
-            <circle cx="62"  cy="38" r="7.5" fill="var(--immune)" style="animation-delay:.1s"/>
-            <circle cx="140" cy="24" r="6" fill="var(--prolif)" style="animation-delay:.16s"/>
-            <circle cx="214" cy="40" r="6.5" fill="var(--er)" style="animation-delay:.22s"/>
-            <circle cx="288" cy="30" r="5.5" fill="var(--her2)" style="animation-delay:.28s"/>
-            <circle cx="104" cy="96" r="6.5" fill="var(--dna)" style="animation-delay:.34s"/>
-            <circle cx="190" cy="102" r="7" fill="var(--signaling)" style="animation-delay:.4s"/>
-            <circle cx="258" cy="86" r="5" fill="var(--metabolism)" style="animation-delay:.46s"/>
-          </g>
-        </svg>
-        <div class="viz-cap">115 signatures &amp; pathways, cross-linked by axis</div>
-      </div>
+  <header class="hero">
+    <div class="eyebrow">
+      <span class="dot" style="background:var(--immune)"></span>immune
+      <span class="dot" style="background:var(--prolif)"></span>proliferation
+      <span class="dot" style="background:var(--er)"></span>ER
+      <span class="dot" style="background:var(--her2)"></span>HER2
+      <span class="dot" style="background:var(--dna)"></span>DNA-repair
+    </div>
+    <h1>Signature Atlas<br><span class="thin">pathways, gene sets &amp; signatures by biological axis</span></h1>
+    <p class="lede">One connected map of the breast-cancer pCR landscape: Hallmark sets, PROGENy footprints, DoRothEA regulons and published clinical signatures — grouped by axis, cross-linked, weighted where weights exist, and annotated with what is established in breast cancer.</p>
+    <p class="lede-cn">按免疫 / 增殖 / ER / HER2 / DNA-repair 轴组织 · 相互超链接 · 真实基因组成与权重 · 每条带临床注释</p>
+    <div class="header-viz" aria-hidden="true">
+      <svg class="atlas-net" viewBox="0 0 340 126" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g class="net-edges" stroke="var(--line)" stroke-width="1.4">
+          <line x1="170" y1="63" x2="62" y2="38" style="animation-delay:.05s"/>
+          <line x1="170" y1="63" x2="140" y2="24" style="animation-delay:.1s"/>
+          <line x1="170" y1="63" x2="214" y2="40" style="animation-delay:.15s"/>
+          <line x1="170" y1="63" x2="104" y2="96" style="animation-delay:.2s"/>
+          <line x1="170" y1="63" x2="190" y2="102" style="animation-delay:.25s"/>
+          <line x1="170" y1="63" x2="258" y2="86" style="animation-delay:.3s"/>
+          <line x1="140" y1="24" x2="214" y2="40" style="animation-delay:.32s"/>
+          <line x1="214" y1="40" x2="288" y2="30" style="animation-delay:.36s"/>
+          <line x1="104" y1="96" x2="190" y2="102" style="animation-delay:.4s"/>
+          <line x1="258" y1="86" x2="288" y2="30" style="animation-delay:.44s"/>
+        </g>
+        <g class="net-nodes">
+          <circle cx="170" cy="63" r="6" fill="var(--ink-faint)" style="animation-delay:0s"/>
+          <circle cx="62"  cy="38" r="7.5" fill="var(--immune)" style="animation-delay:.1s"/>
+          <circle cx="140" cy="24" r="6" fill="var(--prolif)" style="animation-delay:.16s"/>
+          <circle cx="214" cy="40" r="6.5" fill="var(--er)" style="animation-delay:.22s"/>
+          <circle cx="288" cy="30" r="5.5" fill="var(--her2)" style="animation-delay:.28s"/>
+          <circle cx="104" cy="96" r="6.5" fill="var(--dna)" style="animation-delay:.34s"/>
+          <circle cx="190" cy="102" r="7" fill="var(--signaling)" style="animation-delay:.4s"/>
+          <circle cx="258" cy="86" r="5" fill="var(--metabolism)" style="animation-delay:.46s"/>
+        </g>
+      </svg>
+      <div class="viz-cap">115 signatures &amp; pathways, cross-linked by axis</div>
     </div>
     <div class="stats">
-      <div class="stat" v-for="s in stats" :key="s.l"><b>{{ s.n }}</b><span>{{ s.l }}</span></div>
+      <div class="stat" v-for="s in stats" :key="s.l" :style="{'--sc':s.c}"><b>{{ s.n }}</b><span>{{ s.l }}</span></div>
     </div>
   </header>
 
@@ -425,7 +422,7 @@ footer .mono{font-size:11.5px}
       <span class="seltray-n">{{ selCount }} selected</span>
       <button class="tbtn" @click="selectAllShown">+ All shown ({{ filtered.length }})</button>
       <span class="tsep"></span>
-      <button class="tbtn primary" @click="exportWord">⬇ Word</button>
+      <button class="tbtn primary" @click="exportDocx">⬇ Word (.docx)</button>
       <button class="tbtn primary" @click="exportExcel">⬇ Excel</button>
       <button class="tbtn danger" @click="clearSel">Clear all</button>
     </div>
@@ -461,7 +458,7 @@ createApp({
     const open=reactive({}),flashId=ref(null),toastMsg=ref(""),copied=ref("");
 
     const nT=t=>entries.filter(e=>e.type===t).length;
-    const stats=[{n:nT("hallmark"),l:"Hallmark sets"},{n:nT("footprint"),l:"PROGENy footprints"},{n:nT("regulon"),l:"DoRothEA regulons"},{n:nT("signature")+nT("panel"),l:"BC signatures / panels"},{n:Object.keys(REFS).length,l:"related citations"}];
+    const stats=[{n:nT("hallmark"),l:"Hallmark sets",c:"var(--dna)"},{n:nT("footprint"),l:"PROGENy footprints",c:"var(--er)"},{n:nT("regulon"),l:"DoRothEA regulons",c:"var(--prolif)"},{n:nT("signature")+nT("panel"),l:"BC signatures / panels",c:"var(--immune)"},{n:Object.keys(REFS).length,l:"related citations",c:"var(--her2)"}];
     const tabs=[{id:"atlas",label:"Atlas",n:entries.length},{id:"methods",label:"Methods",n:8},{id:"refs",label:"References",n:Object.keys(REFS).length}];
     const axisFilters=[{v:"all",l:"All axes"},{v:"immune",l:"Immune",sw:"immune"},{v:"prolif",l:"Proliferation",sw:"prolif"},{v:"er",l:"ER / hormone",sw:"er"},{v:"her2",l:"HER2",sw:"her2"},{v:"dna",l:"DNA-repair / HRD",sw:"dna"},{v:"signaling",l:"Signaling",sw:"signaling"},{v:"metabolism",l:"Metabolism",sw:"metabolism"},{v:"other",l:"Other",sw:"other"}];
     const typeFilters=[{v:"all",l:"All"},{v:"hallmark",l:"Hallmark"},{v:"footprint",l:"PROGENy"},{v:"regulon",l:"DoRothEA"},{v:"signature",l:"BC signature"},{v:"panel",l:"Immune panel"}];
@@ -509,12 +506,28 @@ createApp({
     function download(content,mime,filename){const blob=new Blob([content],{type:mime});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(url),1500);}
     function csvCell(v){v=String(v==null?"":v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
     const TABLE_TITLE="Supplementary Table. The detailed calculation method of each biomarker.";
-    function exportWord(){
-      const rows=selectedRows();if(!rows.length)return;
+    function downloadBlob(blob,filename){const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(url),1500);}
+    function loadDocx(){return new Promise((res,rej)=>{if(window.docx)return res(window.docx);const s=document.createElement("script");s.src="https://unpkg.com/docx@8.5.0/build/index.umd.js";s.onload=()=>window.docx?res(window.docx):rej();s.onerror=rej;document.head.appendChild(s);});}
+    function wordHtmlFallback(rows){
       const body=rows.map(r=>`<tr><td>${esc(r.name)}</td><td>${esc(r.genes)}</td><td>${esc(r.pmid)}</td></tr>`).join("");
-      const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><style>@page{size:landscape}body{font-family:Calibri,Arial,sans-serif;font-size:10pt}p.t{font-weight:bold;margin:0 0 8pt}table{border-collapse:collapse;width:100%}th,td{border:1px solid #000;padding:4pt 6pt;vertical-align:top;text-align:left}th{background:#e8edf3;font-weight:bold}td:first-child{white-space:nowrap;font-weight:bold}td:last-child{white-space:nowrap}</style></head><body><p class="t">${esc(TABLE_TITLE)}</p><table><thead><tr><th>Biomarker</th><th>Genes</th><th>PMID</th></tr></thead><tbody>${body}</tbody></table></body></html>`;
+      const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><style>@page{size:landscape}body{font-family:Calibri,Arial,sans-serif;font-size:9pt}p.t{font-weight:bold;margin:0 0 8pt}table{border-collapse:collapse;width:100%}th,td{border:1px solid #000;padding:3pt 5pt;vertical-align:top;text-align:left;page-break-inside:auto}tr{page-break-inside:auto}th{background:#e8edf3;font-weight:bold}td:first-child{font-weight:bold}</style></head><body><p class="t">${esc(TABLE_TITLE)}</p><table><thead><tr><th>Biomarker</th><th>Genes</th><th>PMID</th></tr></thead><tbody>${body}</tbody></table></body></html>`;
       download("\ufeff"+html,"application/msword","supplementary-table.doc");
-      toast(rows.length+" rows → Word");
+      toast(rows.length+" rows → Word (.doc, offline)");
+    }
+    async function exportDocx(){
+      const rows=selectedRows();if(!rows.length)return;
+      try{
+        const D=await loadDocx();const W=D.WidthType.PERCENTAGE;const M={top:36,bottom:36,left:60,right:60};
+        const cell=(t,pct,bold)=>new D.TableCell({width:{size:pct,type:W},margins:M,children:[new D.Paragraph({children:[new D.TextRun({text:String(t==null?"":t),bold:!!bold,size:18})]})]});
+        const hcell=(t,pct)=>new D.TableCell({width:{size:pct,type:W},shading:{fill:"E8EDF3"},margins:M,children:[new D.Paragraph({children:[new D.TextRun({text:t,bold:true,size:18})]})]});
+        const rowsArr=[new D.TableRow({tableHeader:true,children:[hcell("Biomarker",22),hcell("Genes",62),hcell("PMID",16)]})];
+        rows.forEach(r=>rowsArr.push(new D.TableRow({children:[cell(r.name,22,true),cell(r.genes,62,false),cell(r.pmid,16,false)]})));
+        const table=new D.Table({width:{size:100,type:W},rows:rowsArr});
+        const doc=new D.Document({sections:[{properties:{page:{size:{orientation:D.PageOrientation.LANDSCAPE}}},children:[new D.Paragraph({children:[new D.TextRun({text:TABLE_TITLE,bold:true,size:22})]}),new D.Paragraph({text:""}),table]}]});
+        const blob=await D.Packer.toBlob(doc);
+        downloadBlob(blob,"supplementary-table.docx");
+        toast(rows.length+" rows → Word (.docx)");
+      }catch(err){wordHtmlFallback(rows);}
     }
     function loadSheetJS(){return new Promise((res,rej)=>{if(window.XLSX)return res(window.XLSX);const s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";s.onload=()=>window.XLSX?res(window.XLSX):rej();s.onerror=rej;document.head.appendChild(s);});}
     async function exportExcel(){
@@ -572,7 +585,7 @@ createApp({
       stats,tabs,axisFilters,typeFilters,methods,methodRef,REFS,filtered,axisLabel,typeLabel,
       allAxes,relItems,refItems,refLink,accent,shortName,maxW,barStyle,selectType,selectAxis,toggle,jump,
       axisCount,typeCount,clearAll,freezeCard,
-      selected,selCount,toggleSel,selectAllShown,clearSel,exportWord,exportExcel,
+      selected,selCount,toggleSel,selectAllShown,clearSel,exportDocx,exportExcel,
       copyGenes,copyWeights,copyRef,copyAllBib,toggleTheme,Math};
   }
 }).mount("#app");
