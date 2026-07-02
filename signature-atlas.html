@@ -109,11 +109,11 @@ main{max-width:1220px;margin:0 auto;padding:18px 24px 80px}
 @keyframes flash{0%,100%{box-shadow:var(--shadow)}18%{box-shadow:0 0 0 3px var(--accent),var(--shadow-lift)}}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .selbox{flex:0 0 auto;position:relative;cursor:pointer;display:inline-flex;align-items:center;padding-top:2px}
-.selbox input{position:absolute;opacity:0;width:0;height:0}
+.selbox input,.pitem input{position:absolute;opacity:0;width:0;height:0}
 .sbx{position:relative;width:17px;height:17px;border:1.5px solid var(--line);border-radius:5px;display:inline-block;transition:background .15s,border-color .15s}
-.selbox:hover .sbx{border-color:var(--accent)}
-.selbox input:checked + .sbx{background:var(--accent);border-color:var(--accent)}
-.selbox input:checked + .sbx::after{content:"";position:absolute;left:5px;top:1px;width:4px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.selbox:hover .sbx,.pitem:hover .sbx{border-color:var(--accent)}
+.selbox input:checked + .sbx,.pitem input:checked + .sbx{background:var(--accent);border-color:var(--accent)}
+.selbox input:checked + .sbx::after,.pitem input:checked + .sbx::after{content:"";position:absolute;left:5px;top:1px;width:4px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
 .card.sel{border-color:var(--accent);box-shadow:0 0 0 1.5px var(--accent),var(--shadow)}
 .seltray{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:90;display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:9px 13px;box-shadow:var(--shadow-lift);flex-wrap:wrap;max-width:calc(100vw - 28px)}
 .seltray-n{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;color:var(--ink);padding:0 4px}
